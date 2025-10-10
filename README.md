@@ -2,6 +2,12 @@
 
 - [ ] TODO Replace or update this README with instructions relevant to your application
 
+Grupo: TP05-5
+- Catarina Figueiredo, nº122706
+- Patricia Martins, nº105328
+- Tiago Candeias, nº122676
+- Eduardo Correia, nº122703
+
 ## Project Structure
 
 The sources of your App have the following structure:
