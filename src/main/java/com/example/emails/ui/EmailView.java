@@ -7,6 +7,8 @@ import com.example.emails.EmailService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Main;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Menu;
@@ -29,6 +31,9 @@ class EmailView extends Main {
         TextField toField = new TextField("To");
         TextField subjectField = new TextField("Subject");
         TextArea bodyArea = new TextArea("Body");
+        bodyArea.setHeight("200px");
+        bodyArea.setWidthFull();
+
         Button sendBtn = new Button("Send", e -> {
             emailService.sendSimpleEmail(toField.getValue(), subjectField.getValue(), bodyArea.getValue());
             toField.clear(); subjectField.clear(); bodyArea.clear();
@@ -36,14 +41,28 @@ class EmailView extends Main {
 
         Button refreshBtn = new Button("Refresh Inbox", e -> loadInbox());
 
+        VerticalLayout emailForm = new VerticalLayout();
+        emailForm.setPadding(true);
+        emailForm.setSpacing(true);
+        emailForm.setWidth("400px");
+        emailForm.add(
+            toField,
+            subjectField,
+            bodyArea,
+            new HorizontalLayout(sendBtn, refreshBtn)
+        );
+
         grid.removeAllColumns();
         grid.addColumn(EmailMessage::getFrom).setHeader("From");
         grid.addColumn(EmailMessage::getSubject).setHeader("Subject");
         grid.addColumn(EmailMessage::getReceivedDate).setHeader("Received");
         grid.addColumn(EmailMessage::getContent).setHeader("Content").setAutoWidth(true);
 
-        add(new TextField("Send e-mail"), toField, subjectField, bodyArea, sendBtn, refreshBtn, grid);
-        setSizeFull();
+        VerticalLayout mainLayout = new VerticalLayout(emailForm, grid);
+        mainLayout.setSizeFull();
+        mainLayout.setSpacing(true);
+
+        add(mainLayout);
         loadInbox();
     }
 
