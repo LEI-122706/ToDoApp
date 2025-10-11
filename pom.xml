@@ -44,6 +44,17 @@
     </dependencyManagement>
     
     <dependencies>
+        <!-- Biblioteca para fazer requisições HTTP (para obter as taxas de câmbio de uma API)-->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+        </dependency>
+
+        <!-- Biblioteca para processar JSON (as respostas das APIs normalmente vêm em JSON)-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
             <!-- Replace artifactId with vaadin-core to use only free components -->
