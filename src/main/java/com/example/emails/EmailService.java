@@ -2,47 +2,58 @@ package com.example.emails;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.MimeMultipart;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
+import com.vaadin.flow.server.VaadinSession;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
 
 @Service
 public class EmailService {
 
-    private final JavaMailSender mailSender;
 
-    @Value("${mail.imap.host}")
-    private String imapHost;
-
-    @Value("${mail.imap.port}")
-    private String imapPort;
-
-    @Value("${mail.imap.user}")
-    private String imapUser;
-
-    @Value("${mail.imap.password}")
-    private String imapPassword;
-
-    @Value("${mail.imap.ssl.enable:true}")
-    private boolean imapSsl;
+    private final String imapHost;
+    private final String imapPort;
+    private final boolean imapSsl;
 
     public EmailService(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
+        this.imapHost = "imap.gmail.com"; // or use @Value if you want to keep host/port in properties
+        this.imapPort = "993";
+        this.imapSsl = true;
     }
 
-    public void sendSimpleEmail(String to, String subject, String text) {
-        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(to);
-        msg.setSubject(subject);
-        msg.setText(text);
-        mailSender.send(msg);
+    public JavaMailSenderImpl createMailSender(String username, String password) {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername(username);
+        mailSender.setPassword(password);
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        return mailSender;
     }
+
+    public void sendEmail(String from, String to, String subject, String body) throws MessagingException {
+        JavaMailSenderImpl sender = createMailSender(getUsername(), getPassword());
+        MimeMessage message = sender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, false, "utf-8");
+        helper.setFrom(from);
+        helper.setTo(to);
+        helper.setSubject(subject);
+        helper.setText(body, false);
+        sender.send(message);
+    }
+
 
     public List<EmailMessage> fetchInbox() throws MessagingException, IOException {
         Properties props = new Properties();
@@ -53,7 +64,7 @@ public class EmailService {
 
         Session session = Session.getInstance(props);
         Store store = session.getStore("imap");
-        store.connect(imapHost, Integer.parseInt(imapPort), imapUser, imapPassword);
+        store.connect(imapHost, Integer.parseInt(imapPort), getUsername(), getPassword());
 
         Folder inbox = store.getFolder("INBOX");
         inbox.open(Folder.READ_ONLY);
@@ -90,5 +101,12 @@ public class EmailService {
         }
         return "";
     }
-}
 
+    public static String getUsername() {
+        return (String) VaadinSession.getCurrent().getAttribute("email");
+    }
+
+    public static String getPassword() {
+        return (String) VaadinSession.getCurrent().getAttribute("password");
+    }
+}
