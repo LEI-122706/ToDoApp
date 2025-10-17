@@ -24,7 +24,7 @@ import com.vaadin.flow.component.html.Paragraph;
 
 @Route("email")
 @PageTitle("Email")
-@Menu(order = 0, icon = "vaadin:clipboard-check", title = "Email")
+@Menu(order = 0, icon = "vaadin:mailbox", title = "Email")
 class EmailView extends Main implements BeforeEnterObserver {
 
     @Override
