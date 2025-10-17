@@ -1,4 +1,4 @@
-package com.example.examplefeature;
+package com.example.cambio;
 
 import com.example.base.ui.MainLayout;
 import com.vaadin.flow.component.button.Button;
