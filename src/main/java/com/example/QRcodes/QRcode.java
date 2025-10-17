@@ -64,16 +64,12 @@ public class QRcode {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || !getClass().isAssignableFrom(obj.getClass())) {
-            return false;
-        }
-        if (obj == this) {
-            return true;
-        }
-
-        com.example.examplefeature.Task other = (com.example.examplefeature.Task) obj;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        QRcode other = (QRcode) obj;
         return getId() != null && getId().equals(other.getId());
     }
+
 
     @Override
     public int hashCode() {

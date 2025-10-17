@@ -34,4 +34,12 @@ public class QRcodeService {
         return qrcodeRepository.findAllBy(pageable).getContent();
     }
 
+    public String generateQRCodeForTask(QRcode task) {
+        try {
+            String content = "Task: " + task.getDescription() + "\nDue: " + task.getDueDate();
+            return QRcodeGenerator.generateBase64QRCode(content);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate QR code", e);
+        }
+    }
 }
