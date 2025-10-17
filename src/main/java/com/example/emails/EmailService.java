@@ -1,6 +1,5 @@
-package com.example.impressao;
+package com.example.emails;
 
-import com.example.emails.EmailMessage;
 import jakarta.mail.*;
 import jakarta.mail.internet.MimeMultipart;
 import org.springframework.mail.javamail.JavaMailSender;
