@@ -11,6 +11,7 @@ import com.vaadin.flow.component.html.Main;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -33,6 +34,7 @@ class TaskListView extends Main {
     final TextField description;
     final DatePicker dueDate;
     final Button createBtn;
+    final Button printPdfBtn;
     final Grid<Task> taskGrid;
 
     TaskListView(TaskService taskService) {
@@ -51,6 +53,10 @@ class TaskListView extends Main {
         createBtn = new Button("Create", event -> createTask());
         createBtn.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
+        printPdfBtn = new Button("Print PDF", VaadinIcon.PRINT.create(), event -> downloadPdf());
+        printPdfBtn.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
+        printPdfBtn.setAriaLabel("Download tasks as PDF");
+
         var dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM).withLocale(getLocale())
                 .withZone(ZoneId.systemDefault());
         var dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(getLocale());
@@ -67,7 +73,7 @@ class TaskListView extends Main {
         addClassNames(LumoUtility.BoxSizing.BORDER, LumoUtility.Display.FLEX, LumoUtility.FlexDirection.COLUMN,
                 LumoUtility.Padding.MEDIUM, LumoUtility.Gap.SMALL);
 
-        add(new ViewToolbar("Task List", ViewToolbar.group(description, dueDate, createBtn)));
+        add(new ViewToolbar("Task List", ViewToolbar.group(description, dueDate, createBtn), printPdfBtn));
         add(taskGrid);
     }
 
@@ -77,6 +83,14 @@ class TaskListView extends Main {
         description.clear();
         dueDate.clear();
         Notification.show("Task added", 3000, Notification.Position.BOTTOM_END)
+                .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
+    }
+
+    private void downloadPdf() {
+        // Open PDF download in a new window/tab
+        getUI().ifPresent(ui -> ui.getPage().open("/api/pdf/tasks", "_blank"));
+
+        Notification.show("PDF download started", 2000, Notification.Position.BOTTOM_END)
                 .addThemeVariants(NotificationVariant.LUMO_SUCCESS);
     }
 
