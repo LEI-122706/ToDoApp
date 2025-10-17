@@ -1,4 +1,4 @@
-package com.example.examplefeature;
+package com.example.cambio;
 
 public class CambioMoedas {
     public double converter(double valor, double taxaCambio) {
