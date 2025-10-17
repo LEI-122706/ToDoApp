@@ -3,7 +3,7 @@ package com.example.emails.ui;
 import java.util.List;
 
 import com.example.emails.EmailMessage;
-import com.example.emails.EmailService;
+import com.example.impressao.EmailService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Main;

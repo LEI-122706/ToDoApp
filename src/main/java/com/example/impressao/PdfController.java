@@ -1,5 +1,7 @@
-package com.example.examplefeature;
+package com.example.impressao;
 
+import com.example.examplefeature.Task;
+import com.example.examplefeature.TaskService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
