@@ -11,6 +11,8 @@ public class Application implements AppShellConfigurator {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+
+        // random push para fazer um .jar
     }
 
 }
