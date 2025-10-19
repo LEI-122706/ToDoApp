@@ -2,6 +2,8 @@
 
 - [ ] TODO Replace or update this README with instructions relevant to your application
 
+- Vídeo de demonstração no YouTube: https://youtu.be/fBohrTMFhzg
+
 Grupo: TP05-5
 - Catarina Figueiredo, nº122706
 - Patricia Martins, nº105328

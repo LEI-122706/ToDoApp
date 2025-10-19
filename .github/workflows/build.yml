@@ -1,0 +1,39 @@
+name: Build Java Project
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # (1) Checkout do repositório
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # (2) Configurar o Java (versão 21)
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # (3) Executar build com Maven
+      - name: Build with Maven
+        run: mvn clean package
+
+      # (4) Mover o .jar para a raiz do projeto
+      - name: Move JAR to root directory
+        run: |
+          JAR_FILE=$(find target -name "*.jar" | head -n 1)
+          mv "$JAR_FILE" ./app.jar
+
+      # (5) Publicar o artefacto
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: app.jar
