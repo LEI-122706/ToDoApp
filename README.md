@@ -14,6 +14,8 @@
 
 ## Automatização com GitHub Actions
 
+Este último passo do build.yml publica o .jar após ter sido construído com mvn package usando a Github Action sugerida no guião para a publicação de artefactos (actions/upload-artifact). De forma a nomear o artefacto usamos a expressão depois de "name:" que vai buscar o nome do repositório (nest caso "ToDoApp") e adiciona'lhe no fim ".jar".
+
       # (5) Publicar o artefacto (ficheiro .jar)
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
