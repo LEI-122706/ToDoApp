@@ -27,9 +27,7 @@ jobs:
 
       # (4) Encontrar e mover o JAR gerado para a raiz do projeto
       - name: Move JAR to project root
-        run: |
-          JAR_FILE=$(find target -name "*.jar" | head -n 1)
-          cp "$JAR_FILE" ./app.jar
+        run: cp target/*.jar .
 
       # (5) Publicar o artefacto (ficheiro .jar)
       - name: Upload build artifact
