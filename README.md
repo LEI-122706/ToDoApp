@@ -12,6 +12,18 @@
 -   Tiago Candeias, nº122676
 -   Eduardo Correia, nº122703
 
+## Automatização com GitHub Actions
+
+      # (5) Publicar o artefacto (ficheiro .jar)
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-jar
+          path: app.jar
+
+
+
+
 ## Project Structure
 
 The sources of your App have the following structure:
@@ -80,15 +92,6 @@ If you use commercial components, pass the license key as a build secret:
 ```bash
 docker build --secret id=proKey,src=$HOME/.vaadin/proKey .
 ```
-## Automatização com GitHub Actions
-
-      # (5) Publicar o artefacto (ficheiro .jar)
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-jar
-          path: app.jar
-
 
 ## Getting Started
 
