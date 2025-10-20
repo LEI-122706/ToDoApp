@@ -18,8 +18,8 @@
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-jar
-          path: app.jar
+          name: ${{ github.event.repository.name }}-jar
+          path: "*.jar"
 
 
 
