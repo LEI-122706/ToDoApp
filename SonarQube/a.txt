@@ -1,1 +1,0 @@
-Foi usado p script do GitHUb actions para fazer a análise do SonarQube
