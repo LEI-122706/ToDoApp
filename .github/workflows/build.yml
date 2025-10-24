@@ -29,9 +29,6 @@ jobs:
       - name: Move JAR to project root
         run: cp target/*.jar .
 
-      # Copia diretamente para raiz do repositorio
-          cp target/*.jar
-
       # (5) Publicar o artefacto (ficheiro .jar)
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
