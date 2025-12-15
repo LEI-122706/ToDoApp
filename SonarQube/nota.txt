@@ -1,0 +1,3 @@
+Foi usado o script do GitHUb actions para fazer a análise do SonarQube
+
+Como apenas a Catarina Figueiredo (LEI-122706) tinha acesso ao projeto no site da SonarCube, apenas temos uma "printscreen", no entanto foi analisada por todos em aula.
